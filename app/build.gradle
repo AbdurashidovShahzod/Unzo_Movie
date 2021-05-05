@@ -33,8 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    viewBinding{
+    viewBinding {
         enabled = true
+    }
+    buildFeatures {
+        dataBinding = true
     }
 
 }
@@ -72,7 +75,7 @@ dependencies {
 
     /**
      * Paging
-      */
+     */
 
     implementation "androidx.paging:paging-runtime-ktx:3.0.0-beta03"
 }
