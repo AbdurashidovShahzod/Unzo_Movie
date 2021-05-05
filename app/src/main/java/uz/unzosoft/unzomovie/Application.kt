@@ -7,7 +7,7 @@ import uz.unzosoft.unzomovie.databinding.ActivityMainBinding
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class Application : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
