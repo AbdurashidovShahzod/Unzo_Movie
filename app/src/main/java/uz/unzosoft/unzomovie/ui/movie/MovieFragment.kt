@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.unzosoft.unzomovie.MovieViewModel
 import uz.unzosoft.unzomovie.R
@@ -19,6 +20,8 @@ class MovieFragment : Fragment() {
     lateinit var binding: FragmentMovieBinding
 
     val viewModel: MovieViewModel by viewModels()
+    val movieAdapter = MoviePagingAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,7 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
+        setRecyclerView()
         binding.movieSearch.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
@@ -46,6 +50,22 @@ class MovieFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean = false
 
         })
+
+
+
+        viewModel.listPager.observe(viewLifecycleOwner)
+        {
+            movieAdapter.submitData(lifecycle, it)
+        }
+    }
+
+
+    private fun setRecyclerView() {
+        binding.movieRecycler.apply {
+            adapter = movieAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+
+        }
     }
 
 

@@ -8,7 +8,7 @@ import uz.unzosoft.unzomovie.data.MovieResponse
 interface MovieInterface {
 
 
-    @GET()
+    @GET("/")
     suspend fun getAllMovies(
         @Query("s") s: String,
         @Query("page") page: Int,
