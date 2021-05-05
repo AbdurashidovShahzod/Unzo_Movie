@@ -23,7 +23,7 @@ class MoviePaging(val s: String, val movieInterface: MovieInterface) : PagingSou
 
         return try {
 
-            val data = movieInterface.getAllMovies(s, page, Constants.BASE_URL)
+            val data = movieInterface.getAllMovies(s, page, Constants.API_KEY)
             LoadResult.Page(
                 data = data.body()?.Search!!,
                 prevKey = if (page == 1) null else page - 1,
