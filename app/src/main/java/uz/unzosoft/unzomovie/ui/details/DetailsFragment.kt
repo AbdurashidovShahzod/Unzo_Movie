@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import uz.unzosoft.unzomovie.MovieViewModel
 import uz.unzosoft.unzomovie.R
@@ -18,6 +19,7 @@ class DetailsFragment : Fragment() {
     lateinit var binding: FragmentDetailsBinding
 
     val viewModel: MovieViewModel by viewModels()
+    val args: DetailsFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -30,7 +32,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.getMovieDetails()
+        val imdbId = args.imdbId!!
+        viewModel.getMovieDetails(imdbId)
 
 
         viewModel.movieDetails.observe(viewLifecycleOwner) {
