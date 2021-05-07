@@ -24,8 +24,6 @@ class MoviePagingAdapter : PagingDataAdapter<Search, MoviePagingAdapter.MyViewHo
                 oldItem == newItem
 
         }
-
-
     }
 
 
@@ -41,7 +39,6 @@ class MoviePagingAdapter : PagingDataAdapter<Search, MoviePagingAdapter.MyViewHo
         val binding =
             ViewHolderMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
-
     }
 
 }
