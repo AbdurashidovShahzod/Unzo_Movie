@@ -13,6 +13,8 @@ import uz.unzosoft.unzomovie.databinding.ViewHolderMovieBinding
 class MoviePagingAdapter : PagingDataAdapter<Search, MoviePagingAdapter.MyViewHolder>(DIFF_UTIl) {
 
 
+    var onClick: ((String) -> Unit)? = null
+
     companion object {
 
         val DIFF_UTIl = object : DiffUtil.ItemCallback<Search>() {
@@ -27,12 +29,24 @@ class MoviePagingAdapter : PagingDataAdapter<Search, MoviePagingAdapter.MyViewHo
     }
 
 
+    fun onMovieClick(listener: (String) -> Unit) {
+        onClick = listener
+    }
+
     inner class MyViewHolder(val viewDataBinding: ViewHolderMovieBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root)
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.viewDataBinding.setVariable(BR.movie, getItem(position))
+        val data = getItem(position)
+        holder.viewDataBinding.setVariable(BR.movie, data)
+
+
+        holder.viewDataBinding.root.setOnClickListener {
+            onClick?.let {
+                it(data!!.imdbID)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

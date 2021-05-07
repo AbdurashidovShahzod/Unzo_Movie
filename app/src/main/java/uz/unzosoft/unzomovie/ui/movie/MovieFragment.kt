@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.unzosoft.unzomovie.MovieViewModel
@@ -52,6 +53,12 @@ class MovieFragment : Fragment() {
         })
 
 
+
+        movieAdapter.onMovieClick {
+            val action = MovieFragmentDirections.actionMovieFragmentToDetailsFragment(it)
+            findNavController().navigate(action)
+
+        }
 
         viewModel.listPager.observe(viewLifecycleOwner)
         {

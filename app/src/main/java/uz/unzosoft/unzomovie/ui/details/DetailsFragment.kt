@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.unzosoft.unzomovie.MovieViewModel
 import uz.unzosoft.unzomovie.R
 import uz.unzosoft.unzomovie.databinding.FragmentDetailsBinding
+import uz.unzosoft.unzomovie.utils.Status
 
 
 @AndroidEntryPoint
@@ -29,10 +30,22 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        viewModel.getMovieDetails()
+
+
         viewModel.movieDetails.observe(viewLifecycleOwner) {
             when (it.getContentIfNotHandled()?.status) {
+                Status.LOADING -> {
+                    binding.detailsProgress.visibility = View.VISIBLE
 
-
+                }
+                Status.ERROR -> {
+                    binding.detailsProgress.visibility = View.GONE
+                }
+                Status.SUCCESS -> {
+                    binding.detailsProgress.visibility = View.GONE
+                    binding.movieDetails = it.peekContent().data
+                }
             }
         }
     }
