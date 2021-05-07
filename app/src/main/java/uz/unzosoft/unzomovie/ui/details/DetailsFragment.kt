@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import uz.unzosoft.unzomovie.MovieViewModel
@@ -31,6 +32,10 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
+        binding.backPress.setOnClickListener { findNavController().popBackStack() }
+
 
         val imdbId = args.imdbId!!
         viewModel.getMovieDetails(imdbId)
