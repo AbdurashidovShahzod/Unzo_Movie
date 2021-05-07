@@ -9,14 +9,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import uz.unzosoft.unzomovie.data.moviedetails.MovieDetails
 import uz.unzosoft.unzomovie.remote.MovieInterface
+import uz.unzosoft.unzomovie.ui.details.MovieDetailsRepository
 import uz.unzosoft.unzomovie.ui.movie.MoviePaging
 import uz.unzosoft.unzomovie.utils.Events
 import uz.unzosoft.unzomovie.utils.Result
+import uz.unzosoft.unzomovie.utils.Status
 import javax.inject.Inject
 
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieInterface: MovieInterface) : ViewModel() {
+class MovieViewModel @Inject constructor(
+    private val movieInterface: MovieInterface,
+    private val repository: MovieDetailsRepository
+) : ViewModel() {
 
     private val queryMutableLiveData = MutableLiveData("")
 
@@ -35,6 +40,10 @@ class MovieViewModel @Inject constructor(private val movieInterface: MovieInterf
     val movieDetails: LiveData<Events<Result<MovieDetails>>> = _movieDetails
     fun getMovieDetails(imbd: String) = viewModelScope.launch {
 
+        _movieDetails.postValue(
+            Events(Result(Status.LOADING, null, null))
+        )
+        _movieDetails.postValue(Events(repository.getMovieDetails(imbd)))
 
     }
 
